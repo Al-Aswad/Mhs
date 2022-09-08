@@ -1,19 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../services/Mahasiswa";
 
 function Login() {
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
   const handleLogin = (e) => {
     e.preventDefault();
     if (user !== "" && user.password !== "") {
-      console.log(user);
-      navigate("/");
+      login(user.email, user.password).then((res) => {
+        if (res.data.success) {
+          localStorage.setItem("token", res.data.accessToken);
+          navigate("/home");
+        } else {
+          alert("Username atau Password salah");
+        }
+      });
     } else {
       alert("Username atau Password salah");
     }
@@ -32,8 +39,8 @@ function Login() {
                 className="py-2 px-4 rounded-sm outline-none focus:ring-2 focus:ring-sky-400"
                 type="text"
                 placeholder="jhon@gmail.com"
-                value={user.username}
-                onChange={(e) => setUser({ ...user, username: e.target.value })}
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
               />
               <input
                 className="py-2 px-4 rounded-sm outline-none focus:ring-2 focus:ring-sky-400"
