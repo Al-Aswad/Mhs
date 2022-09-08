@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getMahasiswa } from "../../services/Mahasiswa";
 
 function Home() {
@@ -32,7 +33,7 @@ function Home() {
             <tbody>
               {Mahasiswa.map((mhs, index) => (
                 <tr className="even:bg-slate-600 odd:bg-slate-500">
-                  <td className="p-2">
+                  <td className="p-4">
                     <span className="font-bold">{index + 1}</span>  
                   </td>
                   <td className="p-2">
@@ -45,7 +46,7 @@ function Home() {
                     <span className="font-bold">{mhs.alamat}</span>
                   </td>
                   <td className="p-2">
-                    <span className="font-bold">{mhs.id}</span>
+                    <Link className="py-1 px-3 bg-sky-500 text-white rounded-md" to={`/users/${mhs.id}`}>Detail</Link>
                   </td>
                 </tr>
               ))}
